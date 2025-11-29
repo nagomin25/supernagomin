@@ -8,12 +8,14 @@ void Main()
 	// 統一初期化構文↓
 	const Texture emoji{ U"🐈‍⬛"_emoji };
 
+	const Texture emojiBack{ U"🌳"_emoji };
+
+	const Texture floor{ U"🧱"_emoji };
+
 	// プレイヤーの移動スピード | Player's movement speed
 	double speed = 400.0;
 
-	// プレイヤーの X 座標 | Player's X position
-	double playerPosX = 400;
-	double playerPosY = 540;
+	Vec2 playerPos{400, 540};
 
 	constexpr double gravity = 1500;
 	double jumptime = 0;
@@ -27,7 +29,11 @@ void Main()
 	bool isPlayerFacingRight = true;
 
 	constexpr double leftWall = 60;
-	constexpr double rightWall = 740;
+	constexpr double rightWall = 1740;
+
+	Vec2 center{400, 200};
+
+	Camera2D camera{center, 1, CameraControl::Default};
 
 	while (System::Update())
 	{
@@ -36,7 +42,7 @@ void Main()
 		if (KeyLeft.pressed() || KeyA.pressed())
 		{
 			// プレイヤーが左に移動する | Player moves left
-			playerPosX = Max((playerPosX - speed * Scene::DeltaTime()), leftWall);
+			playerPos.x = Max((playerPos.x - speed * Scene::DeltaTime()), leftWall);
 			isPlayerFacingRight = false;
 		}
 
@@ -44,17 +50,17 @@ void Main()
 		if (KeyRight.pressed() || KeyD.pressed())
 		{
 			// プレイヤーが右に移動する | Player moves right
-			playerPosX = Min((playerPosX + speed * Scene::DeltaTime()), rightWall);
+			playerPos.x = Min((playerPos.x + speed * Scene::DeltaTime()), rightWall);
 			isPlayerFacingRight = true;
 		}
 
 		if (KeySpace.pressed() || isPlayerJumping)
 		{
 			double y = 0.5*gravity*jumptime*jumptime - v0*jumptime + ground;
-			playerPosY = y;
+			playerPos.y = y;
 			isPlayerJumping = true;
 
-			if (playerPosY >= ground)
+			if (playerPos.y >= ground)
 			{
 				isPlayerJumping = false;
 				jumptime = 0;
@@ -62,8 +68,32 @@ void Main()
 			jumptime = jumptime + Scene::DeltaTime();
 		}
 
+		camera.jumpTo(playerPos, 1);
+		camera.update();
+		const auto tr = camera.createTransformer();
+
+		// 背景を描く
+		for (int32 y = 0; y < 4; ++y)
+		{
+			for (int32 x = 0; x < 100; ++x)
+			{
+				emojiBack.drawAt(x * 150, y * 150);
+			}
+		}
+
+		// 床を描く
+		for (int32 y = 0; y < 5; ++y)
+		{
+			for (int32 x = 0; x < 100; ++x)
+			{
+				floor.drawAt(x * 120, 630 + y * 120);
+			}
+		}
+
+
 		// プレイヤーを描く | Draw the player
-		emoji.scaled(0.75).mirrored(isPlayerFacingRight).drawAt(playerPosX, playerPosY);
+		emoji.scaled(0.75).mirrored(isPlayerFacingRight).drawAt(playerPos.x, playerPos.y);
+
 	}
 }
 
