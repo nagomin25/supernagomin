@@ -94,6 +94,7 @@ void Main()
 		// プレイヤーを描く | Draw the player
 		emoji.scaled(0.75).mirrored(isPlayerFacingRight).drawAt(playerPos.x, playerPos.y);
 
+
 	}
 }
 
