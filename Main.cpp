@@ -31,6 +31,10 @@ void Main()
 	constexpr double leftWall = 60.0;
 	constexpr double rightWall = 1740.0;
 
+	const double floorTextureSize = 120.0;
+	const double floorStartHeight = 630.0;
+	const double backgroundTextureSize = 150.0;
+
 	double windowWidth = Window::DefaultClientSize.x;
 	double windowHeight = Window::DefaultClientSize.y;
 
@@ -75,6 +79,8 @@ void Main()
 			{
 				isPlayerJumping = false;
 				jumpTime = 0.0;
+				//沈み込みを避けるために地面位置を代入
+				playerPos.y = groundHeight;
 			}
 			else
 			{
@@ -93,7 +99,7 @@ void Main()
 		{
 			for (int32 x = 0; x < 100; ++x)
 			{
-				backGroundTexture.drawAt(x * 150, y * 150);
+				backGroundTexture.drawAt(x * backgroundTextureSize, y * backgroundTextureSize);
 			}
 		}
 
@@ -102,7 +108,7 @@ void Main()
 		{
 			for (int32 x = 0; x < 100; ++x)
 			{
-				floor.drawAt(x * 120, 630 + y * 120);
+				floor.drawAt(x * floorTextureSize, floorStartHeight + y * floorTextureSize);
 			}
 		}
 
