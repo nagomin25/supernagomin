@@ -6,34 +6,41 @@ void Main()
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.9 });
 
 	// 統一初期化構文↓
-	const Texture emoji{ U"🐈‍⬛"_emoji };
+	const Texture playerTexture{ U"🐈‍⬛"_emoji };
 
-	const Texture emojiBack{ U"🌳"_emoji };
+	const Texture backGroundTexture{ U"🌳"_emoji };
 
 	const Texture floor{ U"🧱"_emoji };
 
 	// プレイヤーの移動スピード | Player's movement speed
-	double speed = 400.0;
+	constexpr double speed = 400.0;
 
-	Vec2 playerPos{400, 540};
 
-	constexpr double gravity = 1500;
-	double jumptime = 0;
-	constexpr double v0 = 1000;
 
-	constexpr double ground = 540;
+	constexpr double gravity = 1500.0;
+	double jumpTime = 0.0;
+	constexpr double jumpPower = 1000.0;
+
+	constexpr double groundHeight = 540.0;
 
 	bool isPlayerJumping = false;
 
 	// プレイヤーが右を向いているか | Whether player is facing right
 	bool isPlayerFacingRight = true;
 
-	constexpr double leftWall = 60;
-	constexpr double rightWall = 1740;
+	constexpr double leftWall = 60.0;
+	constexpr double rightWall = 1740.0;
 
-	Vec2 center{400, 200};
+	const double floorTextureSize = 120.0;
+	const double floorStartHeight = 630.0;
+	const double backgroundTextureSize = 150.0;
 
-	Camera2D camera{center, 1, CameraControl::Default};
+	double windowWidth = Window::DefaultClientSize.x;
+	double windowHeight = Window::DefaultClientSize.y;
+
+	Vec2 playerPos{windowWidth / 2.0, 540.0};
+
+	Camera2D camera{ Vec2{ windowWidth / 2.0, 500}, 1.0, CameraControl::Default};
 
 	while (System::Update())
 	{
@@ -54,21 +61,36 @@ void Main()
 			isPlayerFacingRight = true;
 		}
 
-		if (KeySpace.pressed() || isPlayerJumping)
+		if (KeySpace.pressed())
 		{
-			double y = 0.5*gravity*jumptime*jumptime - v0*jumptime + ground;
-			playerPos.y = y;
 			isPlayerJumping = true;
-
-			if (playerPos.y >= ground)
-			{
-				isPlayerJumping = false;
-				jumptime = 0;
-			}
-			jumptime = jumptime + Scene::DeltaTime();
 		}
 
-		camera.jumpTo(playerPos, 1);
+		if (isPlayerJumping)
+		{
+			// ジャンプ処理、今回は鉛直投げ上げの式を採用
+			// 参考文献
+			// https://qiita.com/odanny/items/297f32a334c41410cc5d
+			double y = 0.5*gravity*jumpTime*jumpTime - jumpPower*jumpTime + groundHeight;
+			playerPos.y = y;
+
+
+			if (playerPos.y > groundHeight)
+			{
+				isPlayerJumping = false;
+				jumpTime = 0.0;
+				//沈み込みを避けるために地面位置を代入
+				playerPos.y = groundHeight;
+			}
+			else
+			{
+				jumpTime = jumpTime + Scene::DeltaTime();
+			}
+
+
+		}
+
+		camera.jumpTo(playerPos, 1.0);
 		camera.update();
 		const auto tr = camera.createTransformer();
 
@@ -77,7 +99,7 @@ void Main()
 		{
 			for (int32 x = 0; x < 100; ++x)
 			{
-				emojiBack.drawAt(x * 150, y * 150);
+				backGroundTexture.drawAt(x * backgroundTextureSize, y * backgroundTextureSize);
 			}
 		}
 
@@ -86,13 +108,14 @@ void Main()
 		{
 			for (int32 x = 0; x < 100; ++x)
 			{
-				floor.drawAt(x * 120, 630 + y * 120);
+				floor.drawAt(x * floorTextureSize, floorStartHeight + y * floorTextureSize);
 			}
 		}
 
 
 		// プレイヤーを描く | Draw the player
-		emoji.scaled(0.75).mirrored(isPlayerFacingRight).drawAt(playerPos.x, playerPos.y);
+		playerTexture.scaled(0.75).mirrored(isPlayerFacingRight).drawAt(playerPos.x, playerPos.y);
+
 
 	}
 }
