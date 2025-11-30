@@ -57,7 +57,10 @@ void Main()
 			isPlayerFacingRight = true;
 		}
 
-		if (KeySpace.pressed()) { isPlayerJumping = true; }
+		if (KeySpace.pressed())
+		{
+			isPlayerJumping = true;
+		}
 
 		if (isPlayerJumping)
 		{
@@ -66,14 +69,19 @@ void Main()
 			// https://qiita.com/odanny/items/297f32a334c41410cc5d
 			double y = 0.5*gravity*jumpTime*jumpTime - jumpPower*jumpTime + groundHeight;
 			playerPos.y = y;
-			isPlayerJumping = true;
 
-			if (playerPos.y >= groundHeight)
+
+			if (playerPos.y > groundHeight)
 			{
 				isPlayerJumping = false;
 				jumpTime = 0.0;
 			}
-			jumpTime = jumpTime + Scene::DeltaTime();
+			else
+			{
+				jumpTime = jumpTime + Scene::DeltaTime();
+			}
+
+
 		}
 
 		camera.jumpTo(playerPos, 1.0);
