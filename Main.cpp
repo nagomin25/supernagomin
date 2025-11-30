@@ -61,6 +61,9 @@ void Main()
 
 		if (isPlayerJumping)
 		{
+			// ジャンプ処理、今回は鉛直投げ上げの式を採用
+			// 参考文献
+			// https://qiita.com/odanny/items/297f32a334c41410cc5d
 			double y = 0.5*gravity*jumpTime*jumpTime - jumpPower*jumpTime + groundHeight;
 			playerPos.y = y;
 			isPlayerJumping = true;
