@@ -15,25 +15,25 @@ void Main()
 	// プレイヤーの移動スピード | Player's movement speed
 	double speed = 400.0;
 
-	Vec2 playerPos{400, 540};
+	Vec2 playerPos{400.0, 540.0};
 
-	constexpr double gravity = 1500;
-	double jumpTime = 0;
-	constexpr double v0 = 1000;
+	constexpr double gravity = 1500.0;
+	double jumpTime = 0.0;
+	constexpr double v0 = 1000.0;
 
-	constexpr double ground = 540;
+	constexpr double ground = 540.0;
 
 	bool isPlayerJumping = false;
 
 	// プレイヤーが右を向いているか | Whether player is facing right
 	bool isPlayerFacingRight = true;
 
-	constexpr double leftWall = 60;
-	constexpr double rightWall = 1740;
+	constexpr double leftWall = 60.0;
+	constexpr double rightWall = 1740.0;
 
-	Vec2 center{400, 200};
+	Vec2 center{400.0, 200.0};
 
-	Camera2D camera{center, 1, CameraControl::Default};
+	Camera2D camera{center, 1.0, CameraControl::Default};
 
 	while (System::Update())
 	{
@@ -63,7 +63,7 @@ void Main()
 			if (playerPos.y >= ground)
 			{
 				isPlayerJumping = false;
-				jumpTime = 0;
+				jumpTime = 0.0;
 			}
 			jumpTime = jumpTime + Scene::DeltaTime();
 		}
