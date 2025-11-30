@@ -29,14 +29,23 @@ void Main()
 	bool isPlayerFacingRight = true;
 
 	constexpr double leftWall = 60.0;
-	constexpr double rightWall = 1740.0;
+	constexpr double rightWall = 3000.0;
 
-	const double floorTextureSize = 120.0;
-	const double floorStartHeight = 630.0;
-	const double backgroundTextureSize = 150.0;
+	constexpr double floorTextureSize = 120.0;
+	constexpr double floorStartHeight = 630.0;
+	constexpr double backgroundTextureSize = 150.0;
 
 	double windowWidth = Window::DefaultClientSize.x;
 	double windowHeight = Window::DefaultClientSize.y;
+
+	Grid<int32> map = {
+	 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0 ,0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 ,0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1 },
+	};
 
 	Vec2 playerPos{windowWidth / 2.0, 540.0};
 
@@ -90,7 +99,10 @@ void Main()
 
 		}
 
-		camera.jumpTo(playerPos, 1.0);
+		//カメラはプレイヤーよりちょっと上に固定
+		Vec2 cameraPos{ playerPos.x, playerPos.y - 200.0 };
+
+		camera.jumpTo(cameraPos, 1.0);
 		camera.update();
 		const auto tr = camera.createTransformer();
 
@@ -104,11 +116,15 @@ void Main()
 		}
 
 		// 床を描く
-		for (int32 y = 0; y < 5; ++y)
+		for (int32 y = 0; y < map.height() ; ++y)
 		{
-			for (int32 x = 0; x < 100; ++x)
+			for (int32 x = 0; x < map.width() ; ++x)
 			{
-				floor.drawAt(x * floorTextureSize, floorStartHeight + y * floorTextureSize);
+				if (map[y][x] == 1)
+				{
+					floor.drawAt(x * floorTextureSize, y * floorTextureSize);
+				}
+
 			}
 		}
 
