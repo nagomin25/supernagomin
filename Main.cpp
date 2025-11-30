@@ -100,7 +100,7 @@ void Main()
 		}
 
 		//カメラはプレイヤーよりちょっと上に固定
-		Vec2 cameraPos{ playerPos.x, playerPos.y - 200.0 };
+		Vec2 cameraPos{ playerPos.x, groundHeight - 200 };
 
 		camera.jumpTo(cameraPos, 1.0);
 		camera.update();
@@ -131,7 +131,6 @@ void Main()
 
 		// プレイヤーを描く | Draw the player
 		playerTexture.scaled(0.75).mirrored(isPlayerFacingRight).drawAt(playerPos.x, playerPos.y);
-
 
 	}
 }
