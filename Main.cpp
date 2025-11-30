@@ -31,9 +31,7 @@ void Main()
 	constexpr double leftWall = 60.0;
 	constexpr double rightWall = 1740.0;
 
-	constexpr Vec2 center{400.0, 200.0};
-
-	Camera2D camera{center, 1.0, CameraControl::Default};
+	Camera2D camera{ Vec2{ 400, 500}, 1.0, CameraControl::Default};
 
 	while (System::Update())
 	{
