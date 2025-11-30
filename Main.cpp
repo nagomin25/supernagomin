@@ -19,7 +19,7 @@ void Main()
 
 	constexpr double gravity = 1500.0;
 	double jumpTime = 0.0;
-	constexpr double v0 = 1000.0;
+	constexpr double jumpPower = 1000.0;
 
 	constexpr double ground = 540.0;
 
@@ -56,7 +56,7 @@ void Main()
 
 		if (KeySpace.pressed() || isPlayerJumping)
 		{
-			double y = 0.5*gravity*jumpTime*jumpTime - v0*jumpTime + ground;
+			double y = 0.5*gravity*jumpTime*jumpTime - jumpPower*jumpTime + ground;
 			playerPos.y = y;
 			isPlayerJumping = true;
 
