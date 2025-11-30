@@ -21,7 +21,7 @@ void Main()
 	double jumpTime = 0.0;
 	constexpr double jumpPower = 1000.0;
 
-	constexpr double ground = 540.0;
+	constexpr double groundHeight = 540.0;
 
 	bool isPlayerJumping = false;
 
