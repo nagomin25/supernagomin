@@ -66,7 +66,7 @@ void Main()
 			jumpTime = jumpTime + Scene::DeltaTime();
 		}
 
-		camera.jumpTo(playerPos, 1);
+		camera.jumpTo(playerPos, 1.0);
 		camera.update();
 		const auto tr = camera.createTransformer();
 
