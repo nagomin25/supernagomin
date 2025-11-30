@@ -57,7 +57,9 @@ void Main()
 			isPlayerFacingRight = true;
 		}
 
-		if (KeySpace.pressed() || isPlayerJumping)
+		if (KeySpace.pressed()) { isPlayerJumping = true; }
+
+		if (isPlayerJumping)
 		{
 			double y = 0.5*gravity*jumpTime*jumpTime - jumpPower*jumpTime + groundHeight;
 			playerPos.y = y;
