@@ -18,7 +18,7 @@ void Main()
 	Vec2 playerPos{400, 540};
 
 	constexpr double gravity = 1500;
-	double jumptime = 0;
+	double jumpTime = 0;
 	constexpr double v0 = 1000;
 
 	constexpr double ground = 540;
@@ -56,16 +56,16 @@ void Main()
 
 		if (KeySpace.pressed() || isPlayerJumping)
 		{
-			double y = 0.5*gravity*jumptime*jumptime - v0*jumptime + ground;
+			double y = 0.5*gravity*jumpTime*jumpTime - v0*jumpTime + ground;
 			playerPos.y = y;
 			isPlayerJumping = true;
 
 			if (playerPos.y >= ground)
 			{
 				isPlayerJumping = false;
-				jumptime = 0;
+				jumpTime = 0;
 			}
-			jumptime = jumptime + Scene::DeltaTime();
+			jumpTime = jumpTime + Scene::DeltaTime();
 		}
 
 		camera.jumpTo(playerPos, 1);
