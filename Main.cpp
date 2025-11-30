@@ -6,9 +6,9 @@ void Main()
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.9 });
 
 	// 統一初期化構文↓
-	const Texture emoji{ U"🐈‍⬛"_emoji };
+	const Texture playerTexture{ U"🐈‍⬛"_emoji };
 
-	const Texture emojiBack{ U"🌳"_emoji };
+	const Texture backGroundTexture{ U"🌳"_emoji };
 
 	const Texture floor{ U"🧱"_emoji };
 
@@ -77,7 +77,7 @@ void Main()
 		{
 			for (int32 x = 0; x < 100; ++x)
 			{
-				emojiBack.drawAt(x * 150, y * 150);
+				backGroundTexture.drawAt(x * 150, y * 150);
 			}
 		}
 
@@ -92,7 +92,7 @@ void Main()
 
 
 		// プレイヤーを描く | Draw the player
-		emoji.scaled(0.75).mirrored(isPlayerFacingRight).drawAt(playerPos.x, playerPos.y);
+		playerTexture.scaled(0.75).mirrored(isPlayerFacingRight).drawAt(playerPos.x, playerPos.y);
 
 
 	}
