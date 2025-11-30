@@ -13,7 +13,7 @@ void Main()
 	const Texture floor{ U"🧱"_emoji };
 
 	// プレイヤーの移動スピード | Player's movement speed
-	double speed = 400.0;
+	constexpr double speed = 400.0;
 
 	Vec2 playerPos{400.0, 540.0};
 
@@ -31,7 +31,7 @@ void Main()
 	constexpr double leftWall = 60.0;
 	constexpr double rightWall = 1740.0;
 
-	Vec2 center{400.0, 200.0};
+	constexpr Vec2 center{400.0, 200.0};
 
 	Camera2D camera{center, 1.0, CameraControl::Default};
 
@@ -56,11 +56,11 @@ void Main()
 
 		if (KeySpace.pressed() || isPlayerJumping)
 		{
-			double y = 0.5*gravity*jumpTime*jumpTime - jumpPower*jumpTime + ground;
+			double y = 0.5*gravity*jumpTime*jumpTime - jumpPower*jumpTime + groundHeight;
 			playerPos.y = y;
 			isPlayerJumping = true;
 
-			if (playerPos.y >= ground)
+			if (playerPos.y >= groundHeight)
 			{
 				isPlayerJumping = false;
 				jumpTime = 0.0;
