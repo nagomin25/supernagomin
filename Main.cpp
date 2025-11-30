@@ -15,7 +15,7 @@ void Main()
 	// プレイヤーの移動スピード | Player's movement speed
 	constexpr double speed = 400.0;
 
-	Vec2 playerPos{400.0, 540.0};
+
 
 	constexpr double gravity = 1500.0;
 	double jumpTime = 0.0;
@@ -31,7 +31,12 @@ void Main()
 	constexpr double leftWall = 60.0;
 	constexpr double rightWall = 1740.0;
 
-	Camera2D camera{ Vec2{ 400, 500}, 1.0, CameraControl::Default};
+	double windowWidth = Window::DefaultClientSize.x;
+	double windowHeight = Window::DefaultClientSize.y;
+
+	Vec2 playerPos{windowWidth / 2.0, 540.0};
+
+	Camera2D camera{ Vec2{ windowWidth / 2.0, 500}, 1.0, CameraControl::Default};
 
 	while (System::Update())
 	{
